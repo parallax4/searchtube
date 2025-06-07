@@ -1,4 +1,4 @@
-module github.com/Pauloo27/searchtube
+module github.com/parallax4/searchtube
 
 go 1.16
 
