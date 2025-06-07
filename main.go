@@ -19,7 +19,7 @@ func getContent(data []byte, index int) []byte {
 }
 
 type SearchResult struct {
-	Title, Uploader, URL, RawDuration, ID, Thumbnail string
+	Title, Uploader, ChannelPath, URL, RawDuration, ID, Thumbnail string
 	Live                                             bool
 	duration                                         time.Duration
 }
@@ -119,6 +119,11 @@ func Search(searchTerm string, limit int) (results []*SearchResult, err error) {
 			return
 		}
 
+		channelPath, err := jsonparser.GetString(value, "videoRenderer", "ownerText", "runs", "[0]", "browseEndpoint", "canonicalBaseUrl")
+		if err != nil {
+			return
+		}
+		
 		live := false
 		duration, err := jsonparser.GetString(value, "videoRenderer", "lengthText", "simpleText")
 
@@ -130,6 +135,7 @@ func Search(searchTerm string, limit int) (results []*SearchResult, err error) {
 		results = append(results, &SearchResult{
 			Title:       title,
 			Uploader:    uploader,
+			ChannelPath: channelPath,
 			RawDuration: duration,
 			ID:          id,
 			URL:         fmt.Sprintf("https://youtube.com/watch?v=%s", id),
