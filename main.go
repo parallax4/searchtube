@@ -119,10 +119,7 @@ func Search(searchTerm string, limit int) (results []*SearchResult, err error) {
 			return
 		}
 
-		channelPath, err := jsonparser.GetString(value, "videoRenderer", "ownerText", "runs", "[0]", "browseEndpoint", "canonicalBaseUrl")
-		if err != nil {
-			return
-		}
+		channelPath, _ := jsonparser.GetString(value, "videoRenderer", "ownerText", "runs", "[0]", "navigationEndpoint", "browseEndpoint", "canonicalBaseUrl")
 		
 		live := false
 		duration, err := jsonparser.GetString(value, "videoRenderer", "lengthText", "simpleText")
