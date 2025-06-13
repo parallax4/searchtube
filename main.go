@@ -104,8 +104,6 @@ func Search(searchTerm string, limit int) (results []*SearchResult, err error) {
 			return
 		}
 
-		log.Infof("%s\n\n\n", value)
-
 		id, err := jsonparser.GetString(value, "videoRenderer", "videoId")
 		if err != nil {
 			return
